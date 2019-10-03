@@ -15,19 +15,21 @@ function displayButtons() {
     }
 }
 displayButtons()
-// add to buttons
+
+// push new topic
 $("#addGif").on("click", function (event) {
+    event.preventDefault();
+    addTopic = $("#gifsInput").val().trim();
+    if(!(topicButtons.includes(addTopic))){
+        topicButtons.push(addTopic);
+    }
+    displayButtons()
+})
+
+
+$(document).on("click", ".gif",function(event){
     event.preventDefault()
-        addTopic = $("#gifsInput").val().trim();
-        if(!(topicButtons.includes(addTopic))){
-            topicButtons.push(addTopic)
-        }
-        displayButtons()
-    })
-    
-    
-    $(".gif").on("click", function(event){
-        event.preventDefault()
+    console.log("show a gif")
         var search= $(this).attr('gifTopic');
         var queryURL = `http://api.giphy.com/v1/gifs/search?q=${search}&api_key=ZsEgA2iFC8Yc2Ukf5mf2oa1ekLmkSvyJ&limit=1`;
         $.ajax({
@@ -35,8 +37,6 @@ $("#addGif").on("click", function (event) {
             methos: "GET"
         }).then(function (response) {
             
-        // console.log(response.data[0].bitly_url);
-        console.log(response);
         var crd= $("<div>");
         crd.addClass("card")
 
